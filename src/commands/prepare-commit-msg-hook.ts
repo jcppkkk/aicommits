@@ -12,6 +12,12 @@ import { KnownError, handleCliError } from '../utils/error.js';
 
 const [messageFilePath, commitSource] = process.argv.slice(2);
 
+async function prependToFile(filePath: string, text: string) {
+	const originalContent = await fs.readFile(filePath, 'utf8');
+	const newContent = text + originalContent;
+	await fs.writeFile(filePath, newContent, 'utf8');
+}
+
 export default () => (async () => {
 	if (!messageFilePath) {
 		throw new KnownError('Commit message file path is missing. This file should be called from the "prepare-commit-msg" git hook');
@@ -82,7 +88,7 @@ export default () => (async () => {
 		instructions += `\n${messages[0]}\n`;
 	}
 
-	await fs.appendFile(
+	await prependToFile(
 		messageFilePath,
 		instructions,
 	);
