@@ -8,6 +8,12 @@ import { KnownError, handleCliError } from '../utils/error.js';
 
 const [messageFilePath, commitSource] = process.argv.slice(2);
 
+async function prependToFile(filePath: string, text: string) {
+	const originalContent = await fs.readFile(filePath, 'utf8');
+	const newContent = text + originalContent;
+	await fs.writeFile(filePath, newContent, 'utf8');
+}
+
 export default () =>
 	(async () => {
 		if (!messageFilePath) {
@@ -87,7 +93,7 @@ export default () =>
 			instructions += `\n${messages[0]}\n`;
 		}
 
-		await fs.appendFile(messageFilePath, instructions);
+		await prependToFile(messageFilePath, instructions);
 		outro(`${green('✔')} Saved commit message!`);
 	})().catch((error) => {
 		outro(`${red('✖')} ${error.message}`);
