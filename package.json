@@ -23,7 +23,8 @@
 		"lint": "",
 		"type-check": "tsc",
 		"test": "tsx tests",
-		"prepack": "pnpm build && clean-pkg-json"
+		"prepack": "pnpm build && clean-pkg-json",
+		"pub": "node publish.js"
 	},
 	"dependencies": {
 		"@dqbd/tiktoken": "^1.0.2"
