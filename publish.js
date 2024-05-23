@@ -16,4 +16,4 @@ console.log(`Username: ${userName}, Project: ${projectName}, Branch: ${branchNam
 
 executeCommand('git push');
 executeCommand('pnpm dlx git-publish');
-executeCommand(`sudo npm -g i '${userName}/${projectName}#npm/${branchName}'`);
+executeCommand(`npm -g --loglevel silly i '${userName}/${projectName}#npm/${branchName}'`);
